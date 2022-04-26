@@ -60,7 +60,7 @@ class AuthClient private constructor(
 
     suspend fun getActiveAccountSync(): UserAccount? {
         val account = getLatestAccount() ?: return null
-        return refreshAccount(account.refreshToken)
+        return if(isActiveAccount(account)) account else refreshAccount(account.refreshToken)
     }
 
     fun getAuthCode(): AuthCode {
@@ -128,6 +128,7 @@ class AuthClient private constructor(
     private fun saveAccount(userAccount: UserAccount) {
         val json = formatter.encodeToString(UserAccount.serializer(), userAccount)
         config.accountFile.writeText(json)
+        println("Update Account: ${userAccount.user.name} [${userAccount.accessToken}]")
     }
 
     private fun isActiveAccount(userAccount: UserAccount): Boolean {

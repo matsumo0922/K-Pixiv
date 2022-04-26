@@ -1,14 +1,13 @@
 package client
 
-import data.Restrict
-import data.UserAccount
-import data.UserDetail
+import data.*
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,8 +53,40 @@ class ApiClient private constructor(
         }.parse()
     }
 
-    suspend fun getFollowingUsers(userId: Long, restrict: Restrict): Users {
+    suspend fun getUserIllustBookmarks(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Illust> {
+        val illusts = httpClient.get {
+            if(nextUrl == null) {
+                url("${Endpoint.API}/v1/user/bookmarks/illust")
 
+                parameter("user_id", userId)
+                parameter("restrict", restrict.value)
+            } else {
+                url(nextUrl)
+            }
+        }.parse<Illusts>() ?: return emptyList()
+
+        return mutableListOf<Illust>().apply {
+            addAll(illusts.values)
+            if(!illusts.nextUrl.isNullOrBlank()) addAll(getUserIllustBookmarks(userId, restrict, illusts.nextUrl))
+        }
+    }
+
+    suspend fun getFollowingUsers(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Users.UserPreview> {
+        val users = httpClient.get {
+            if(nextUrl == null) {
+                url("${Endpoint.API}/v1/user/following")
+
+                parameter("user_id", userId)
+                parameter("restrict", restrict.value)
+            } else {
+                url(nextUrl)
+            }
+        }.parse<Users>() ?: return emptyList()
+
+        return mutableListOf<Users.UserPreview>().apply {
+            addAll(users.values)
+            if(!users.nextUrl.isNullOrBlank()) addAll(getFollowingUsers(userId, restrict, users.nextUrl))
+        }
     }
 
     override val coroutineContext: CoroutineContext

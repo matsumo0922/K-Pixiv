@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 class Users(
     @SerialName("user_previews")
-    val userPreviews: List<UserPreview> = emptyList(),
+    override val values: List<UserPreview> = emptyList(),
     @SerialName("next_url")
-    val nextUrl: String? = null,
-) {
+    override val nextUrl: String? = null,
+): PixivListData<Users.UserPreview> {
     @Serializable
     data class UserPreview(
         val user: User = User(),
