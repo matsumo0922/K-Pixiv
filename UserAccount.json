@@ -1,0 +1,23 @@
+{
+    "access_token": "jGQACSDUh0boHgGDbWZkbD-92V0iHylLfK7PVEhsIlY",
+    "expires_in": 3600,
+    "refresh_token": "Pa0hvYFFmHRkpTbJf7EmsczJiFNbTHYeExK4NY3_iFQ",
+    "scope": "",
+    "token_type": "bearer",
+    "user": {
+        "account": "user_dummy",
+        "id": "58290317",
+        "is_mail_authorized": true,
+        "is_premium": false,
+        "mail_address": "caios.dummy@gmail.com",
+        "name": "DUMMY",
+        "profile_image_urls": {
+            "px_16x16": "https://s.pximg.net/common/images/no_profile_ss.png",
+            "px_170x170": "https://s.pximg.net/common/images/no_profile.png",
+            "px_50x50": "https://s.pximg.net/common/images/no_profile_s.png"
+        },
+        "require_policy_agreement": true,
+        "x_restrict": 0
+    },
+    "acquisitionTime": "2022-04-27T00:01:42.643276400"
+}
