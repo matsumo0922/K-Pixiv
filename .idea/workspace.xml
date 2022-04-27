@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed127ef-fbb4-441b-a39d-cb84ffda759a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Illust.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/IllustUrls.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Illusts.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/PixivListData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Tag.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Novel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Novels.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.3.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.3.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.3.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.3.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.3.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.3.3/fileHashes/fileHashes.bin" afterDir="false" />
@@ -18,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAccount.json" beforeDir="false" afterPath="$PROJECT_DIR$/UserAccount.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/MainKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/MainKt.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" afterDir="false" />
@@ -66,7 +64,9 @@
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/localstate/build-history.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/localstate/build-history.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/client/ApiClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/client/ApiClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/client/AuthClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/client/AuthClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Enums.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Enums.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Illust.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Illust.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/IllustUrls.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/ImageUrls.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Users.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Users.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +87,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="CAIOS0922 &lt;caios.system@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -147,15 +152,32 @@
       <option name="presentableId" value="Default" />
       <updated>1650730418274</updated>
     </task>
+    <task id="LOCAL-00001" summary="getUsersIllustBookmarksを追加">
+      <created>1651015617579</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1651015617579</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="getUsersIllustBookmarksを追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="getUsersIllustBookmarksを追加" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/Main.kt</url>
-          <line>7</line>
+          <line>12</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/client/ApiClient.kt</url>
+          <line>141</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

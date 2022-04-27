@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Users(
+data class Users(
     @SerialName("user_previews")
     override val values: List<UserPreview> = emptyList(),
     @SerialName("next_url")
