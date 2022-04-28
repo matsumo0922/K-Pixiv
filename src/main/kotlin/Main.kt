@@ -1,16 +1,18 @@
 import data.IllustType
-import data.RankingMode
 import kotlinx.coroutines.runBlocking
 
 fun main(args: Array<String>) {
 
-    // TestUser: 71136924
+    // Test UserID: 71136924
+    // Test IllustID: 96916534
+    // Test UgoiraID: 83865186
+    // Test NovelID: 17479409
+    // Test CommentID: 76108978
 
     runBlocking {
         val pixiv = KPixiv.getInstance()
-        val data = pixiv.apiClient.getRanking(RankingMode.DAY)
+        val data = pixiv.apiClient.getUserIllusts(71136924, IllustType.ILLUST)
 
-        println(data.toString())
-        println(data?.values?.size)
+        println(data.toString()) //println(data?.values?.size)
     }
 }

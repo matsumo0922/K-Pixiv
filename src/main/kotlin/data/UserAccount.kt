@@ -17,7 +17,5 @@ data class UserAccount(
     val scope: String = "",
     @SerialName("token_type")
     val tokenType: String = "",
-    val user: LocalUser = LocalUser(),
-    @Serializable(with = LocalDateTimeSerializer::class)
-    val acquisitionTime: LocalDateTime = LocalDateTime.now()
+    val user: LocalUser = LocalUser(), @SerialName("acquisition_time") @Serializable(with = LocalDateTimeSerializer::class) val acquisitionTime: LocalDateTime = LocalDateTime.now()
 )
