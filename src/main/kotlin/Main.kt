@@ -1,4 +1,3 @@
-import data.IllustType
 import kotlinx.coroutines.runBlocking
 
 fun main(args: Array<String>) {
@@ -11,8 +10,8 @@ fun main(args: Array<String>) {
 
     runBlocking {
         val pixiv = KPixiv.getInstance()
-        val data = pixiv.apiClient.getUserIllusts(71136924, IllustType.ILLUST)
+        val data = pixiv.apiClient.getBookmarkTags(71136924, true)
 
-        println(data.toString()) //println(data?.values?.size)
+        println(data.toString())
     }
 }

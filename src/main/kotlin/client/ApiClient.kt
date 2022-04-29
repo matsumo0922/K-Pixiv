@@ -2,6 +2,7 @@ package client
 
 import data.*
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -400,6 +401,77 @@ class ApiClient private constructor(
         }.parse<JsonObject>() ?: return emptyList()
 
         return formatter.decodeFromJsonElement(autoComplete["tags"] ?: return emptyList())
+    }
+
+    /**
+     * Test CAUTION -> TODO: start_date,end_dateの同時指定が必須の可能性
+     * キーワードに一致するイラストを検索
+     */
+    suspend fun searchIllust(searchConfig: SearchConfig, nextUrl: String? = null): SearchIllusts? {
+        return httpClient.get {
+            if (nextUrl == null) {
+                url("${Endpoint.API}/v1/search/illust")
+                parameter("filter", "for_android")
+                parameter("word", searchConfig.keyword)
+                parameter("sort", searchConfig.sort.value)
+                parameter("search_target", searchConfig.target.value)
+                parameter("include_translated_tag_results", searchConfig.isIncludeTranslatedTag)
+                parameter("merge_plain_keyword_results", searchConfig.isMergePlainKeyword)
+
+                searchConfig.startDate?.let { parameter("start_date", it.toString()) }
+                searchConfig.endDate?.let { parameter("end_date", it.toString()) }
+            } else {
+                url(nextUrl)
+            }
+        }.parse()
+    }
+
+    /**
+     * Test CAUTION -> TODO: start_date,end_dateの同時指定が必須の可能性
+     * キーワードに一致する小説を検索
+     */
+    suspend fun searchNovel(searchConfig: SearchConfig, nextUrl: String? = null): SearchNovels? {
+        return httpClient.get {
+            if (nextUrl == null) {
+                url("${Endpoint.API}/v1/search/novel")
+                parameter("filter", "for_android")
+                parameter("word", searchConfig.keyword)
+                parameter("sort", searchConfig.sort.value)
+                parameter("search_target", searchConfig.target.value)
+                parameter("include_translated_tag_results", searchConfig.isIncludeTranslatedTag)
+                parameter("merge_plain_keyword_results", searchConfig.isMergePlainKeyword)
+
+                searchConfig.startDate?.let { parameter("start_date", it.toString()) }
+                searchConfig.endDate?.let { parameter("end_date", it.toString()) }
+            } else {
+                url(nextUrl)
+            }
+        }.parse()
+    }
+
+    /**
+     * Test OK
+     * キーワードに一致するユーザーを検索
+     */
+    suspend fun searchUser(keyword: String): Users {
+        return httpClient.get {
+            url("${Endpoint.API}/v1/search/user")
+            parameter("filter", "for_android")
+            parameter("word", keyword)
+        }.body()
+    }
+
+    /**
+     * Test FAILED -> TODO: 何の目的に使うのか不明
+     * ブックマークしているタグを取得する？（返す型はUsers型でないので新たに作成する必要あり）
+     */
+    @Deprecated(message = "Test FAILED")
+    suspend fun getBookmarkTags(userId: Long, isNovel: Boolean, restrict: Restrict = Restrict.Public): Users? {
+        return httpClient.get {
+            url("${Endpoint.API}/v1/user/bookmark-tags/${if (isNovel) "novel" else "illust"}")
+            parameter("user_id", userId)
+            parameter("restrict", restrict.value)
+        }.parse()
     }
 
     override val coroutineContext: CoroutineContext
