@@ -1,5 +1,5 @@
 {
-    "access_token": "rwNqqLgkNNmfIpCNTaTxwIVC8YrlzLy8xZhtgscOwok",
+    "access_token": "wYyga3KcJ3pzv3afqeQ6YByLFgJHs_D2coA5b-lKcX8",
     "expires_in": 3600,
     "refresh_token": "Pa0hvYFFmHRkpTbJf7EmsczJiFNbTHYeExK4NY3_iFQ",
     "scope": "",
@@ -16,8 +16,8 @@
             "px_170x170": "https://s.pximg.net/common/images/no_profile.png",
             "px_50x50": "https://s.pximg.net/common/images/no_profile_s.png"
         },
-        "require_policy_agreement": true,
+        "require_policy_agreement": false,
         "x_restrict": 0
     },
-    "acquisition_time": "2022-04-30T00:52:58.024575300"
+    "acquisition_time": "2022-05-01T01:47:38.006418200"
 }

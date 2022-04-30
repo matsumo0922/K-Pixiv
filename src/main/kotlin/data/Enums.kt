@@ -5,6 +5,16 @@ enum class Restrict(val value: String) {
     Private("private"),
 }
 
+enum class DeviceType(val value: String) {
+    ANDROID("for_android"),
+    IOS("for_ios")
+}
+
+enum class ImageType(val value: String) {
+    ILLUST("illust"),
+    NOVEL("novel"),
+}
+
 enum class IllustType(val value: String) {
     ILLUST("illust"),
     MANGA("manga"),
@@ -12,9 +22,14 @@ enum class IllustType(val value: String) {
 
 enum class RankingMode(val value: String) {
     DAY("day"),
-    DAY_R18("day_r18"), DAY_MALE("day_male"), DAY_MALE_R18("day_male_r18"), DAY_FEMALE("day_female"), DAY_FEMALE_R18("day_female_r18"), WEEK_ORIGINAL("week_original"), WEEK_ROOKIE("week_rookie"), WEEK(
-        "week"
-    ),
+    DAY_R18("day_r18"),
+    DAY_MALE("day_male"),
+    DAY_MALE_R18("day_male_r18"),
+    DAY_FEMALE("day_female"),
+    DAY_FEMALE_R18("day_female_r18"),
+    WEEK_ORIGINAL("week_original"),
+    WEEK_ROOKIE("week_rookie"),
+    WEEK("week"),
     WEEK_R18("week_r18"), MONTH("month"),
 }
 

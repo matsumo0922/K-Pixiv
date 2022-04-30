@@ -7,7 +7,9 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,21 +56,23 @@ class ApiClient private constructor(
 
     /**
      * Test OK
+     * ユーザーの詳細を取得する
      */
     suspend fun getUserDetails(userId: Long): UserDetail? {
         return httpClient.get {
             url("${Endpoint.API}/v1/user/detail")
 
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
             parameter("user_id", userId)
         }.parse()
     }
 
     /**
      * Test OK
+     * ユーザーがブックマークに登録しているイラストを取得する
      */
     suspend fun getUserIllustBookmarks(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Illust> {
-        val illusts = httpClient.get {
+        val result = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmarks/illust")
 
@@ -80,16 +84,16 @@ class ApiClient private constructor(
         }.parse<Illusts>() ?: return emptyList()
 
         return mutableListOf<Illust>().apply {
-            addAll(illusts.values)
-            if(!illusts.nextUrl.isNullOrBlank()) addAll(getUserIllustBookmarks(userId, restrict, illusts.nextUrl))
+            addAll(result.values)
+            addAll(getUserIllustBookmarks(userId, restrict, result.nextUrl ?: return@apply))
         }
     }
 
     /**
      * Test OK
      */
-    suspend fun getUserNovelBookmarks(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Illust> {
-        val illusts = httpClient.get {
+    suspend fun getUserNovelBookmarks(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Novel> {
+        val result = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmarks/novel")
 
@@ -98,11 +102,11 @@ class ApiClient private constructor(
             } else {
                 url(nextUrl)
             }
-        }.parse<Illusts>() ?: return emptyList()
+        }.parse<Novels>() ?: return emptyList()
 
-        return mutableListOf<Illust>().apply {
-            addAll(illusts.values)
-            if(!illusts.nextUrl.isNullOrBlank()) addAll(getUserNovelBookmarks(userId, restrict, illusts.nextUrl))
+        return mutableListOf<Novel>().apply {
+            addAll(result.values)
+            addAll(getUserNovelBookmarks(userId, restrict, result.nextUrl ?: return@apply))
         }
     }
 
@@ -116,7 +120,7 @@ class ApiClient private constructor(
                 url("${Endpoint.API}/v1/user/illusts")
 
                 parameter("user_id", userId)
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("type", type.value)
             } else {
                 url(nextUrl)
@@ -125,7 +129,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Illust>().apply {
             addAll(illusts.values)
-            if(!illusts.nextUrl.isNullOrBlank()) addAll(getUserIllusts(userId, type, illusts.nextUrl))
+            addAll(getUserIllusts(userId, type, illusts.nextUrl ?: return@apply))
         }
     }
 
@@ -139,7 +143,7 @@ class ApiClient private constructor(
                 url("${Endpoint.API}/v1/user/novels")
 
                 parameter("user_id", userId)
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
             } else {
                 url(nextUrl)
             }
@@ -147,7 +151,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Novel>().apply {
             addAll(novels.values)
-            if(!novels.nextUrl.isNullOrBlank()) addAll(getUserNovels(userId, novels.nextUrl))
+            addAll(getUserNovels(userId, novels.nextUrl ?: return@apply))
         }
     }
 
@@ -159,7 +163,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/${type.value}/recommended")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
             } else {
                 url(nextUrl)
             }
@@ -174,7 +178,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/novel/recommended")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
             } else {
                 url(nextUrl)
             }
@@ -189,7 +193,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/recommended")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
             } else {
                 url(nextUrl)
             }
@@ -204,7 +208,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/illust/ranking")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("mode", mode.value)
             } else {
                 url(nextUrl)
@@ -219,7 +223,7 @@ class ApiClient private constructor(
     suspend fun getTrandTags(): List<TrendTag> {
         return httpClient.get {
             url("${Endpoint.API}/v1/trending-tags/illust")
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
         }.parse<TrendTags>()?.trendTags ?: emptyList()
     }
 
@@ -241,7 +245,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Users.UserPreview>().apply {
             addAll(users.values)
-            if (!users.nextUrl.isNullOrBlank()) addAll(getFollowingUsers(userId, restrict, users.nextUrl))
+            addAll(getFollowingUsers(userId, restrict, users.nextUrl ?: return@apply))
         }
     }
 
@@ -253,7 +257,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if (nextUrl == null) {
                 url("${Endpoint.API}/v2/illust/follow")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("restrict", restrict?.value ?: "all")
             } else {
                 url(nextUrl)
@@ -269,7 +273,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if (nextUrl == null) {
                 url("${Endpoint.API}/v1/novel/follow")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("restrict", restrict?.value ?: "all")
             } else {
                 url(nextUrl)
@@ -284,7 +288,7 @@ class ApiClient private constructor(
     suspend fun getNewIllusts(type: IllustType, nextUrl: String? = null): Illusts? {
         return httpClient.get {
             url("${Endpoint.API}/v1/illust/new")
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
             parameter("content_type", type.value)
         }.parse()
     }
@@ -306,7 +310,7 @@ class ApiClient private constructor(
     suspend fun getIllustRelated(illustId: Long): Illusts? {
         return httpClient.get {
             url("${Endpoint.API}/v2/illust/related")
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
             parameter("illust_id", illustId)
         }.parse()
     }
@@ -318,7 +322,7 @@ class ApiClient private constructor(
     suspend fun getIllustDetail(illustId: Long): Illust? {
         val illust = httpClient.get {
             url("${Endpoint.API}/v1/illust/detail")
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
             parameter("illust_id", illustId)
         }.parse<JsonObject>() ?: return null
 
@@ -365,7 +369,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Comment>().apply {
             addAll(comment.values)
-            if (!comment.nextUrl.isNullOrBlank()) addAll(getComments(illustId, comment.nextUrl))
+            addAll(getComments(illustId, comment.nextUrl ?: return@apply))
         }
     }
 
@@ -385,7 +389,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Comment>().apply {
             addAll(comment.values)
-            if (!comment.nextUrl.isNullOrBlank()) addAll(getCommentReplies(commentId, comment.nextUrl))
+            addAll(getCommentReplies(commentId, comment.nextUrl ?: return@apply))
         }
     }
 
@@ -411,7 +415,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if (nextUrl == null) {
                 url("${Endpoint.API}/v1/search/illust")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("word", searchConfig.keyword)
                 parameter("sort", searchConfig.sort.value)
                 parameter("search_target", searchConfig.target.value)
@@ -434,7 +438,7 @@ class ApiClient private constructor(
         return httpClient.get {
             if (nextUrl == null) {
                 url("${Endpoint.API}/v1/search/novel")
-                parameter("filter", "for_android")
+                parameter("filter", config.deviceType.value)
                 parameter("word", searchConfig.keyword)
                 parameter("sort", searchConfig.sort.value)
                 parameter("search_target", searchConfig.target.value)
@@ -456,22 +460,144 @@ class ApiClient private constructor(
     suspend fun searchUser(keyword: String): Users {
         return httpClient.get {
             url("${Endpoint.API}/v1/search/user")
-            parameter("filter", "for_android")
+            parameter("filter", config.deviceType.value)
             parameter("word", keyword)
         }.body()
     }
 
     /**
-     * Test FAILED -> TODO: 何の目的に使うのか不明
-     * ブックマークしているタグを取得する？（返す型はUsers型でないので新たに作成する必要あり）
+     * Test OK
+     * ブックマークに登録しているイラストをすべて取得する
      */
-    @Deprecated(message = "Test FAILED")
-    suspend fun getBookmarkTags(userId: Long, isNovel: Boolean, restrict: Restrict = Restrict.Public): Users? {
-        return httpClient.get {
-            url("${Endpoint.API}/v1/user/bookmark-tags/${if (isNovel) "novel" else "illust"}")
-            parameter("user_id", userId)
-            parameter("restrict", restrict.value)
-        }.parse()
+    suspend fun getBookmarkIllusts(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Illust> {
+        val illusts = httpClient.get {
+            if(nextUrl == null) {
+                url("${Endpoint.API}/v1/user/bookmarks/illust")
+                parameter("user_id", userId)
+                parameter("restrict", restrict.value)
+                parameter("filter", config.deviceType.value)
+            } else {
+                url(nextUrl)
+            }
+        }.parse<Illusts>() ?: return emptyList()
+
+        return mutableListOf<Illust>().apply {
+            addAll(illusts.values)
+            addAll(getBookmarkIllusts(userId, restrict, illusts.nextUrl ?: return@apply))
+        }
+    }
+
+
+    /**
+     * Test FAILED -> TODO: 何の目的に使うのか不明
+     * ブックマークしているタグを取得する？
+     */
+    suspend fun getBookmarkTags(userId: Long, imageType: ImageType, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<BookmarkTag> {
+        val tags = httpClient.get {
+            if(nextUrl == null) {
+                url("${Endpoint.API}/v1/user/bookmark-tags/${imageType.value}")
+                parameter("user_id", userId)
+                parameter("restrict", restrict.value)
+            } else {
+                url(nextUrl)
+            }
+        }.parse<BookmarkTags>() ?: return emptyList()
+
+        return mutableListOf<BookmarkTag>().apply {
+            addAll(tags.values)
+            addAll(getBookmarkTags(userId, imageType, restrict, tags.nextUrl ?: return@apply))
+        }
+    }
+
+    /**
+     * Test OK
+     * ブックマークの詳細を取得する
+     */
+    suspend fun getBookmarkDetail(illustId: Long): BookmarkDetail? {
+        val detail = httpClient.get {
+            url("${Endpoint.API}/v2/illust/bookmark/detail")
+            parameter("illust_id", illustId)
+        }.parse<JsonObject>() ?: return null
+
+        return formatter.decodeFromJsonElement(detail["bookmark_detail"] ?: return null)
+    }
+
+    /**
+     * Test OK
+     * ブックマークに追加する
+     */
+    suspend fun addBookmark(illustId: Long, imageType: ImageType, restrict: Restrict = Restrict.Public, tags: List<String> = emptyList()): Boolean {
+        return httpClient.submitForm(
+            url = "${Endpoint.API}/v2/${imageType.value}/bookmark/add",
+            formParameters = Parameters.build {
+                append("${imageType.value}_id", illustId.toString())
+                append("restrict", restrict.value)
+                append("tags[]", tags.toString())
+            }
+        ).isSuccess()
+    }
+
+    /**
+     * Test OK
+     * ブックマークから削除する
+     */
+    suspend fun deleteBookmark(illustId: Long, imageType: ImageType): Boolean {
+        return httpClient.submitForm(
+            url = "${Endpoint.API}/v1/${imageType.value}/bookmark/delete",
+            formParameters = Parameters.build {
+                append("${imageType.value}_id", illustId.toString())
+            }
+        ).isSuccess()
+    }
+
+    /**
+     * Test OK
+     * ユーザーをフォローする
+     */
+    suspend fun addFollow(userId: Long, restrict: Restrict = Restrict.Public): Boolean {
+        return httpClient.submitForm(
+            url = "${Endpoint.API}/v1/user/follow/add",
+            formParameters = Parameters.build {
+                append("user_id", userId.toString())
+                append("restrict", restrict.value)
+            }
+        ).isSuccess()
+    }
+
+    /**
+     * Test OK
+     * ユーザーのフォローを解除する
+     */
+    suspend fun deleteFollow(userId: Long): Boolean {
+        return httpClient.submitForm(
+            url = "${Endpoint.API}/v1/user/follow/delete",
+            formParameters = Parameters.build {
+                append("user_id", userId.toString())
+            }
+        ).isSuccess()
+    }
+
+    suspend fun addComment(illustId: Long, comment: String, parentCommentId: Int? = null): Comment? {
+        val result = httpClient.submitForm(
+            url = "${Endpoint.API}/v1/illust/comment/add",
+            formParameters = Parameters.build {
+                append("illust_id", illustId.toString())
+                append("comment", comment)
+
+                parentCommentId?.let { append("parent_comment_id", parentCommentId.toString()) }
+            }
+        ).parse<JsonObject>() ?: return null
+
+        return formatter.decodeFromJsonElement(result["comment"] ?: return null)
+    }
+
+    suspend fun deleteComment(commentId: Long): Boolean {
+        return httpClient.submitForm(
+            url = "${Endpoint.API}/v1/illust/comment/delete",
+            formParameters = Parameters.build {
+                append("comment_id", commentId.toString())
+            }
+        ).isSuccess()
     }
 
     override val coroutineContext: CoroutineContext

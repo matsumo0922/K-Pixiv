@@ -18,4 +18,8 @@ open class Client {
         println(this.bodyAsText())
         return (if(this.status.value in allowRange) this.body<T>() else null).also(f)
     }
+
+    protected fun HttpResponse.isSuccess(allowRange: IntRange = 200..299): Boolean {
+        return (this.status.value in allowRange)
+    }
 }
