@@ -1,15 +1,15 @@
 {
-    "access_token": "wYyga3KcJ3pzv3afqeQ6YByLFgJHs_D2coA5b-lKcX8",
-    "expires_in": 3600,
-    "refresh_token": "Pa0hvYFFmHRkpTbJf7EmsczJiFNbTHYeExK4NY3_iFQ",
-    "scope": "",
-    "token_type": "bearer",
-    "user": {
-        "account": "user_dummy",
-        "id": "58290317",
-        "is_mail_authorized": true,
-        "is_premium": false,
-        "mail_address": "caios.dummy@gmail.com",
+  "access_token": "mNO0WNQMxBusEoqe1LtuIn_wBaSYhH0SjzIA-FTLQsE",
+  "expires_in": 3600,
+  "refresh_token": "Pa0hvYFFmHRkpTbJf7EmsczJiFNbTHYeExK4NY3_iFQ",
+  "scope": "",
+  "token_type": "bearer",
+  "user": {
+    "account": "user_dummy",
+    "id": "58290317",
+    "is_mail_authorized": true,
+    "is_premium": false,
+    "mail_address": "caios.dummy@gmail.com",
         "name": "DUMMY",
         "profile_image_urls": {
             "px_16x16": "https://s.pximg.net/common/images/no_profile_ss.png",
@@ -19,5 +19,5 @@
         "require_policy_agreement": false,
         "x_restrict": 0
     },
-    "acquisition_time": "2022-05-01T01:47:38.006418200"
+  "acquisition_time": "2022-05-02T13:23:50.399785500"
 }

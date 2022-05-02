@@ -3,7 +3,6 @@ package client
 import data.AuthCode
 import data.UserAccount
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -11,18 +10,17 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import tool.UrlTool
 import java.security.MessageDigest
 import java.time.LocalDateTime
-import java.util.Base64
+import java.util.*
 
 
 class AuthClient private constructor(
-    private val config: Config,
+    override val config: Config,
     private val formatter: Json,
-    ): Client() {
+) : Client(config) {
 
     companion object {
         private var instance: AuthClient? = null

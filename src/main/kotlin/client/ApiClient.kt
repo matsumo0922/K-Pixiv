@@ -20,10 +20,10 @@ import kotlinx.serialization.json.decodeFromJsonElement
 import kotlin.coroutines.CoroutineContext
 
 class ApiClient private constructor(
-    private val config: Config,
+    override val config: Config,
     private val callback: OnRequireCallback,
     private val formatter: Json,
-    ): Client(), CoroutineScope {
+) : Client(config), CoroutineScope {
 
     companion object {
         private var instance: ApiClient? = null
@@ -46,19 +46,13 @@ class ApiClient private constructor(
         install(ContentNegotiation) {
             json(formatter)
         }
-
-        HttpResponseValidator {
-            validateResponse {
-                println("DEBUG: $it")
-            }
-        }
     }
 
     /**
      * Test OK
      * ユーザーの詳細を取得する
      */
-    suspend fun getUserDetails(userId: Long): UserDetail? {
+    suspend fun getUserDetail(userId: Long): UserDetail? {
         return httpClient.get {
             url("${Endpoint.API}/v1/user/detail")
 
@@ -220,7 +214,7 @@ class ApiClient private constructor(
      * Test OK
      * トレンドのタグを取得する
      */
-    suspend fun getTrandTags(): List<TrendTag> {
+    suspend fun getTrendTags(): List<TrendTag> {
         return httpClient.get {
             url("${Endpoint.API}/v1/trending-tags/illust")
             parameter("filter", config.deviceType.value)
@@ -285,7 +279,7 @@ class ApiClient private constructor(
      * Test OK
      * みんなの新着イラストを取得
      */
-    suspend fun getNewIllusts(type: IllustType, nextUrl: String? = null): Illusts? {
+    suspend fun getNewIllusts(type: IllustType): Illusts? {
         return httpClient.get {
             url("${Endpoint.API}/v1/illust/new")
             parameter("filter", config.deviceType.value)
@@ -333,7 +327,7 @@ class ApiClient private constructor(
      * Test OK
      * 小説をHTMLで取得
      */
-    suspend fun getNovelHtml(novelId: Int): String {
+    suspend fun getNovelHtml(novelId: Long): String {
         return httpClient.get {
             url("${Endpoint.API}/webview/v1/novel")
             parameter("id", novelId)
@@ -469,9 +463,13 @@ class ApiClient private constructor(
      * Test OK
      * ブックマークに登録しているイラストをすべて取得する
      */
-    suspend fun getBookmarkIllusts(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Illust> {
+    suspend fun getBookmarkedIllusts(
+        userId: Long,
+        restrict: Restrict = Restrict.Public,
+        nextUrl: String? = null
+    ): List<Illust> {
         val illusts = httpClient.get {
-            if(nextUrl == null) {
+            if (nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmarks/illust")
                 parameter("user_id", userId)
                 parameter("restrict", restrict.value)
@@ -483,7 +481,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Illust>().apply {
             addAll(illusts.values)
-            addAll(getBookmarkIllusts(userId, restrict, illusts.nextUrl ?: return@apply))
+            addAll(getBookmarkedIllusts(userId, restrict, illusts.nextUrl ?: return@apply))
         }
     }
 
@@ -492,9 +490,14 @@ class ApiClient private constructor(
      * Test FAILED -> TODO: 何の目的に使うのか不明
      * ブックマークしているタグを取得する？
      */
-    suspend fun getBookmarkTags(userId: Long, imageType: ImageType, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<BookmarkTag> {
+    suspend fun getBookmarkedTags(
+        userId: Long,
+        imageType: ImageType,
+        restrict: Restrict = Restrict.Public,
+        nextUrl: String? = null
+    ): List<BookmarkTag> {
         val tags = httpClient.get {
-            if(nextUrl == null) {
+            if (nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmark-tags/${imageType.value}")
                 parameter("user_id", userId)
                 parameter("restrict", restrict.value)
@@ -505,7 +508,7 @@ class ApiClient private constructor(
 
         return mutableListOf<BookmarkTag>().apply {
             addAll(tags.values)
-            addAll(getBookmarkTags(userId, imageType, restrict, tags.nextUrl ?: return@apply))
+            addAll(getBookmarkedTags(userId, imageType, restrict, tags.nextUrl ?: return@apply))
         }
     }
 
@@ -513,7 +516,7 @@ class ApiClient private constructor(
      * Test OK
      * ブックマークの詳細を取得する
      */
-    suspend fun getBookmarkDetail(illustId: Long): BookmarkDetail? {
+    suspend fun getBookmarkedDetail(illustId: Long): BookmarkDetail? {
         val detail = httpClient.get {
             url("${Endpoint.API}/v2/illust/bookmark/detail")
             parameter("illust_id", illustId)
