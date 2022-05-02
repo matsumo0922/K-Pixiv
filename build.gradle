@@ -2,10 +2,11 @@ plugins {
     id "org.jetbrains.kotlin.jvm" version "1.6.20"
     id "org.jetbrains.kotlin.plugin.serialization" version "1.6.20"
     id "application"
+    id "maven-publish"
 }
 
-group = "me.matsu"
-version = "1.0-SNAPSHOT"
+group = "com.github.CAIOS0922"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,7 +15,7 @@ repositories {
 dependencies {
     ext.kotlin_version = "1.6.21"
     ext.ktor_version = "2.0.0"
-    
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
     
