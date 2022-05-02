@@ -10,8 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed127ef-fbb4-441b-a39d-cb84ffda759a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
@@ -151,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651467638090</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Jitpack公開準備1">
+      <created>1651468975044</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651468975044</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,7 +175,8 @@
     <MESSAGE value="PC移行" />
     <MESSAGE value="検索API以外の実装を完了" />
     <MESSAGE value="テストコードを追加 &amp; Main.ktを削除" />
-    <option name="LAST_COMMIT_MESSAGE" value="テストコードを追加 &amp; Main.ktを削除" />
+    <MESSAGE value="Jitpack公開準備1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jitpack公開準備1" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
