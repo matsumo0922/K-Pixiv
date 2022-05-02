@@ -55,7 +55,6 @@ class ApiClient private constructor(
     suspend fun getUserDetail(userId: Long): UserDetail? {
         return httpClient.get {
             url("${Endpoint.API}/v1/user/detail")
-
             parameter("filter", config.deviceType.value)
             parameter("user_id", userId)
         }.parse()
@@ -69,7 +68,6 @@ class ApiClient private constructor(
         val result = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmarks/illust")
-
                 parameter("user_id", userId)
                 parameter("restrict", restrict.value)
             } else {
@@ -90,7 +88,6 @@ class ApiClient private constructor(
         val result = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/bookmarks/novel")
-
                 parameter("user_id", userId)
                 parameter("restrict", restrict.value)
             } else {
@@ -112,7 +109,6 @@ class ApiClient private constructor(
         val illusts = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/illusts")
-
                 parameter("user_id", userId)
                 parameter("filter", config.deviceType.value)
                 parameter("type", type.value)
@@ -135,7 +131,6 @@ class ApiClient private constructor(
         val novels = httpClient.get {
             if(nextUrl == null) {
                 url("${Endpoint.API}/v1/user/novels")
-
                 parameter("user_id", userId)
                 parameter("filter", config.deviceType.value)
             } else {
@@ -229,7 +224,6 @@ class ApiClient private constructor(
         val users = httpClient.get {
             if (nextUrl == null) {
                 url("${Endpoint.API}/v1/user/following")
-
                 parameter("user_id", userId)
                 parameter("restrict", restrict.value)
             } else {

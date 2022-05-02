@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.CAIOS0922"
-version = "1.0.2-SNAPSHOT"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -50,7 +50,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'com.github.CAIOS0922'
                 artifactId = 'K-Pixiv'
-                version = '1.0.2-SNAPSHOT'
+                version = '1.1.0'
             }
         }
     }
