@@ -11,9 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eed127ef-fbb4-441b-a39d-cb84ffda759a" name="変更" comment="正式リリース">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/client/ApiClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/client/ApiClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tool/UrlTool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tool/UrlTool.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

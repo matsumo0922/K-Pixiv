@@ -2,9 +2,7 @@
 
 [![](https://jitpack.io/v/CAIOS0922/K-Pixiv.svg)](https://jitpack.io/#CAIOS0922/K-Pixiv)
 
-K-Pixiv は Kotlin で書かれた Pixiv API の非公式ラッパーです。JVM, Androidで動作し、v2のOAuth認証にも対応しています。 
-
-<br>
+K-Pixiv は Kotlin で書かれた Pixiv API の非公式ラッパーです。JVM, Androidで動作し、v2のOAuth認証にも対応しています。
 
 # How to use? 
 ## Step1 依存関係の設定
@@ -16,8 +14,6 @@ dependencies {
        implementation 'com.github.CAIOS0922:K-Pixiv:<latest_version>'
 }
 ```
-
-<br>
 
 ## Step2 Pixivログインコードの取得
 <p>第2世代にアップデートされたPixivAPIは以前のパスフレーズ認証は利用できなくなりました。OAuth認証に対応したためです。そのため、こちらもOAuth 2.0のPKCEを用いてログインする必要があります。この認証にはブラウザが必要となるため、JVMの方はChromeなどのデベロッパーツール、Androidの方はWebviewを用いることになります。</p>
@@ -62,12 +58,10 @@ binding.webView.apply {
 }
 ```
 
-<br>
-
 ## Step3 Enjoy!
-<p>以上で複雑な操作は終わりです。このログイン操作は初回に一回のみ必要で、以降はrefresh_tokenを用いて自動的にログインします。基本的なAPIの呼び出しは`Pixiv.apiClient`が担当します。認証やアカウント関連は`Pixiv.authClient`が担当しますが、これは初回以降使うことはないでしょう。また、これらのクラスはシングルインスタンスとなっているので、同時呼び出しの際は一考が必要です。</p>
+<p>以上で複雑な操作は終わりです。このログイン操作は初回に一回のみ必要で、以降はrefresh_tokenを用いて自動的にログインします。基本的なAPIの呼び出しは<code>Pixiv.apiClient</code>が担当します。認証やアカウント関連は<code>Pixiv.authClient</code>が担当しますが、これは初回以降使うことはないでしょう。また、これらのクラスはシングルインスタンスとなっているので、同時呼び出しの際は一考が必要です。</p>
 
-<p>加えて、`Config`クラスを用いることで、K-Pixivにいくつかの設定をすることができます。特に重要なのが、アカウント情報を記載したJsonファイルの保存場所に関する設定です。デフォルトではカレントディレクトリの直下に保存する設定となっていますが、このjsonファイルにはaccess_tokenなどの重要事項が記載されているため、セキュリティ管理を施したディレクトリに保存する必要があります。</P>
+<p>加えて、<code>Config</code>クラスを用いることで、K-Pixivにいくつかの設定をすることができます。特に重要なのが、アカウント情報を記載したJsonファイルの保存場所に関する設定です。デフォルトではカレントディレクトリの直下に保存する設定となっていますが、このjsonファイルにはaccess_tokenなどの重要事項が記載されているため、セキュリティ管理を施したディレクトリに保存する必要があります。</P>
 
 ```Kotlin
 data class Config(
@@ -81,8 +75,6 @@ data class Config(
     val debugMode: Boolean = false
 )
 ```
-
-<br>
 
 # License
 The source code is licensed MIT. The library content is licensed CC BY 4.0, see LICENSE.
