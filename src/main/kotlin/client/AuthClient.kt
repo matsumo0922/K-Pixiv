@@ -74,7 +74,7 @@ class AuthClient private constructor(
             code = "",
             codeVerifier = codeVerifier,
             codeChallenge = codeChallenge,
-            url = "${Endpoint.AUTH}/web/v1/login?${UrlTool.urlEncode(params)}"
+            url = "${Endpoint.API}/web/v1/login?${UrlTool.urlEncode(params)}"
         )
     }
 

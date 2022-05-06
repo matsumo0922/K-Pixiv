@@ -54,7 +54,7 @@ binding.webView.apply {
     webViewClient = webClient
 
     // ログイン画面へ遷移します
-    loadUrl(loginCode.url)
+    loadUrl(authCode.url)
 }
 ```
 
