@@ -2,12 +2,12 @@
 
 [![](https://jitpack.io/v/CAIOS0922/K-Pixiv.svg)](https://jitpack.io/#CAIOS0922/K-Pixiv)
 
-K-Pixiv は Kotlin で書かれた Pixiv API の非公式ラッパーです。JVM, Androidで動作し、v2のOAuth認証にも対応しています。
+<p>K-Pixiv は Kotlin で書かれた Pixiv API の非公式ラッパーです。JVM, Androidで動作し、v2のOAuth認証にも対応しています。</p>
 
 # How to use? 
 ## Step1 依存関係の設定
 
-K-Pixiv をプロジェクトに組み込むには、このリポジトリのコードを追加する必要があります。もしくは、Gradleに以下の依存関係を指定することで自動的に組み込むこともできます。
+<p>K-Pixiv をプロジェクトに組み込むには、このリポジトリのコードを追加する必要があります。もしくは、Gradleに以下の依存関係を指定することで自動的に組み込むこともできます。</p>
 
 ```Gradle
 dependencies {
@@ -77,7 +77,8 @@ data class Config(
 ```
 
 # License
-The source code is licensed MIT. The library content is licensed CC BY 4.0, see LICENSE.
+
+<p>The source code is licensed MIT. The library content is licensed CC BY 4.0, see LICENSE.</p>
 
 ```
 Copyright 2022 CAIOS

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.CAIOS0922"
-version = "1.1.0"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -16,9 +16,9 @@ dependencies {
     ext.kotlin_version = "1.6.21"
     ext.ktor_version = "2.0.0"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.21"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
-    
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-client-okhttp:$ktor_version"
@@ -48,9 +48,8 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                groupId = 'com.github.CAIOS0922'
-                artifactId = 'K-Pixiv'
-                version = '1.1.0'
+                artifactId = "K-Pixiv"
+                from components.java
             }
         }
     }
