@@ -25,7 +25,7 @@ dependencies {
 val pixiv = KPixiv.getInstance(this)
 
 // PKCE用のVerifierなどを取得します
-val loginCode = pixiv.authClient.getLoginCode()
+val authCode = pixiv.authClient.getAuthCode()
 
 // URLが読み込まれる際のリスナーとして使用します
 val webClient = object : WebViewClient() {
@@ -40,7 +40,7 @@ val webClient = object : WebViewClient() {
 
         launch {
             val code = getCode(request.url.toString()) ?: return@launch
-            val account = pixiv.authClient.initAccount(this@AuthActivity, loginCode.apply { this.code = code })
+            val account = pixiv.authClient.initAccount(authCode.apply { this.code = code })
 
             // アカウントの取得に成功
         }

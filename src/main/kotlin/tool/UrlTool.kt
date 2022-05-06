@@ -10,4 +10,18 @@ object UrlTool {
         }
     }
 
+    fun getParameter(url: String): Map<String, String> {
+        val questionIndex = url.indexOf('?')
+        if (questionIndex == -1) return emptyMap()
+
+        val result = mutableMapOf<String, String>()
+        for (parameter in url.substring(questionIndex + 1).split('&')) {
+            val keyValue = parameter.split('=')
+            if (keyValue.size != 2) continue
+
+            result[keyValue[0]] = keyValue[1]
+        }
+
+        return result
+    }
 }

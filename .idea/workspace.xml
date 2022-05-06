@@ -11,8 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eed127ef-fbb4-441b-a39d-cb84ffda759a" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAccount.json" beforeDir="false" afterPath="$PROJECT_DIR$/UserAccount.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tool/UrlTool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tool/UrlTool.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651838259913</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="不要な依存関係を削除">
+      <created>1651852832298</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1651852832298</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,7 +198,8 @@
     <MESSAGE value="Jitpack公開準備1" />
     <MESSAGE value="Jitpack公開準備2" />
     <MESSAGE value="Jitpack用にGradleを修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jitpack用にGradleを修正" />
+    <MESSAGE value="不要な依存関係を削除" />
+    <option name="LAST_COMMIT_MESSAGE" value="不要な依存関係を削除" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
