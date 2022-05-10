@@ -88,7 +88,7 @@ class AuthClient private constructor(
                 append("code_verifier", authCode.codeVerifier)
                 append("grant_type", "authorization_code")
                 append("include_policy", true.toString())
-                append("redirect_uri", "https://app-api.pixiv.net/web/v1/users/auth/pixiv/callback")
+                append("redirect_uri", "${Endpoint.API}/web/v1/users/auth/pixiv/callback")
             }
         ).parse {
             if(it != null) saveAccount(it)
@@ -126,7 +126,8 @@ class AuthClient private constructor(
     private fun saveAccount(userAccount: UserAccount) {
         val json = formatter.encodeToString(UserAccount.serializer(), userAccount)
         config.accountFile.writeText(json)
-        println("Update Account: ${userAccount.user.name} [${userAccount.accessToken}]")
+
+        if(config.debugMode) println("Update Account: ${userAccount.user.name} [${userAccount.accessToken}]")
     }
 
     private fun isActiveAccount(userAccount: UserAccount): Boolean {
