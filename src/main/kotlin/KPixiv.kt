@@ -1,11 +1,7 @@
 import client.ApiClient
 import client.AuthClient
 import client.Config
-import data.AuthCode
-import data.UserAccount
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.io.File
 
 class KPixiv private constructor(private val config: Config) {
 
@@ -27,7 +23,7 @@ class KPixiv private constructor(private val config: Config) {
 
     private val apiCallback = object : ApiClient.OnRequireCallback() {
         override suspend fun onRequireAccessToken(): String {
-            return authClient.getActiveAccountSync()?.accessToken ?: ""
+            return authClient.getActiveAccountSync()?.accessToken ?: throw IllegalStateException("Could not find account info. [${config.accountFile.absolutePath}] is not exist.")
         }
     }
 

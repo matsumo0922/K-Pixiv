@@ -19,6 +19,11 @@ open class Client(open val config: Config) {
         return (if(this.status.value in allowRange) this.body<T>() else null).also(f)
     }
 
+    protected suspend fun HttpResponse.parseBytes(allowRange: IntRange = 200..299): ByteArray? {
+        if (config.debugMode) println("[${this.status}, DOWNLOAD, ${this.request.url}]")
+        return if(this.status.value in allowRange) this.readBytes() else null
+    }
+
     protected fun HttpResponse.isSuccess(allowRange: IntRange = 200..299): Boolean {
         if (config.debugMode) println("[${this.status}, ${this.request.url}]")
         return (this.status.value in allowRange)

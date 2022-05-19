@@ -13,6 +13,7 @@ class SampleTest {
     @Test
     fun getUserDetailsTest() {
         runBlocking {
+            println("\nGetUserDetailsTest")
             pixiv.apiClient.getUserDetail(TestData.testUserID)
         }
     }
@@ -20,6 +21,7 @@ class SampleTest {
     @Test
     fun getUserIllustBookmarksTest() {
         runBlocking {
+            println("\nGetUserIllustBookmarksTest")
             pixiv.apiClient.getUserIllustBookmarks(TestData.testUserID)
         }
     }
@@ -27,6 +29,7 @@ class SampleTest {
     @Test
     fun getUserNovelBookmarksTest() {
         runBlocking {
+            println("\nGetUserNovelBookmarksTest")
             pixiv.apiClient.getUserNovelBookmarks(TestData.testUserID)
         }
     }
@@ -34,6 +37,7 @@ class SampleTest {
     @Test
     fun getUserIllustTest() {
         runBlocking {
+            println("\nGetUserIllustTest")
             pixiv.apiClient.getUserIllusts(TestData.testUserID, IllustType.ILLUST)
         }
     }
@@ -41,6 +45,7 @@ class SampleTest {
     @Test
     fun getUserNovelTest() {
         runBlocking {
+            println("\nGetUserNovelTest")
             pixiv.apiClient.getUserNovels(TestData.testUserID)
         }
     }
@@ -48,6 +53,7 @@ class SampleTest {
     @Test
     fun getRecommendedUserTest() {
         runBlocking {
+            println("\nGetRecommendedUserTest")
             pixiv.apiClient.getRecommendedUsers()
         }
     }
@@ -55,6 +61,7 @@ class SampleTest {
     @Test
     fun getRecommendedIllustsTest() {
         runBlocking {
+            println("\nGetRecommendedIllustsTest")
             pixiv.apiClient.getRecommendedIllusts(IllustType.ILLUST)
         }
     }
@@ -62,6 +69,7 @@ class SampleTest {
     @Test
     fun getRecommendedNovelTest() {
         runBlocking {
+            println("\nGetRecommendedNovelTest")
             pixiv.apiClient.getRecommendedNovels()
         }
     }
@@ -69,6 +77,7 @@ class SampleTest {
     @Test
     fun getRankingTest() {
         runBlocking {
+            println("\nGetRankingTest")
             pixiv.apiClient.getRanking(RankingMode.DAY)
         }
     }
@@ -76,6 +85,7 @@ class SampleTest {
     @Test
     fun getTrendTest() {
         runBlocking {
+            println("\nGetTrendTest")
             pixiv.apiClient.getTrendTags()
         }
     }
@@ -83,6 +93,7 @@ class SampleTest {
     @Test
     fun getFollowingUsersTest() {
         runBlocking {
+            println("\nGetFollowingUsersTest")
             pixiv.apiClient.getFollowingUsers(TestData.testUserID)
         }
     }
@@ -90,6 +101,7 @@ class SampleTest {
     @Test
     fun getFollowerNewIllustsTest() {
         runBlocking {
+            println("\nGetFollowerNewIllustsTest")
             pixiv.apiClient.getFollowerNewIllusts()
         }
     }
@@ -97,6 +109,7 @@ class SampleTest {
     @Test
     fun getFollowerNewNovelsTest() {
         runBlocking {
+            println("\nGetFollowerNewNovelsTest")
             pixiv.apiClient.getFollowerNewNovels()
         }
     }
@@ -104,6 +117,7 @@ class SampleTest {
     @Test
     fun getNewIllustsTest() {
         runBlocking {
+            println("\nGetNewIllustsTest")
             pixiv.apiClient.getNewIllusts(IllustType.ILLUST)
         }
     }
@@ -111,6 +125,7 @@ class SampleTest {
     @Test
     fun getNewNovelsTest() {
         runBlocking {
+            println("\nGetNewNovelTest")
             pixiv.apiClient.getNewNovels()
         }
     }
@@ -118,6 +133,7 @@ class SampleTest {
     @Test
     fun getIllustRelatedTest() {
         runBlocking {
+            println("\nGetIllustRelatedTest")
             pixiv.apiClient.getIllustRelated(TestData.testIllustID)
         }
     }
@@ -125,6 +141,7 @@ class SampleTest {
     @Test
     fun getIllustDetailsTest() {
         runBlocking {
+            println("\nGetIllustDetailsTest")
             pixiv.apiClient.getIllustDetail(TestData.testIllustID)
         }
     }
@@ -132,6 +149,7 @@ class SampleTest {
     @Test
     fun getNovelHtmlTest() {
         runBlocking {
+            println("\nGetNovelHtmlTest")
             pixiv.apiClient.getNovelHtml(TestData.testNovelID)
         }
     }
@@ -139,6 +157,7 @@ class SampleTest {
     @Test
     fun getUgoiraMetadataTest() {
         runBlocking {
+            println("\nGetUgoiraMetadataTest")
             pixiv.apiClient.getUgoiraMetadata(TestData.testUgoiraID)
         }
     }
@@ -146,6 +165,7 @@ class SampleTest {
     @Test
     fun getCommentsTest() {
         runBlocking {
+            println("\nGetCommentTest")
             pixiv.apiClient.getComments(TestData.testIllustID)
         }
     }
@@ -153,6 +173,7 @@ class SampleTest {
     @Test
     fun getCommentsRepliesTest() {
         runBlocking {
+            println("\nGetCommentsRepliesTest")
             pixiv.apiClient.getCommentReplies(TestData.testCommentID)
         }
     }
@@ -160,6 +181,7 @@ class SampleTest {
     @Test
     fun getSearchAutoCompleteTest() {
         runBlocking {
+            println("\nGetSearchAutoCompleteTest")
             pixiv.apiClient.getSearchAutoComplete("ソードアート")
         }
     }
@@ -167,6 +189,7 @@ class SampleTest {
     @Test
     fun searchIllustTest() {
         runBlocking {
+            println("\nSearchIllustTest")
             pixiv.apiClient.searchIllust(SearchConfig("遠坂凛"))
         }
     }
@@ -174,6 +197,7 @@ class SampleTest {
     @Test
     fun searchNovelTest() {
         runBlocking {
+            println("\nSearchNovelTest")
             pixiv.apiClient.searchNovel(SearchConfig("四宮かぐや"))
         }
     }
@@ -181,6 +205,7 @@ class SampleTest {
     @Test
     fun searchUserTest() {
         runBlocking {
+            println("\nSearchUserTest")
             pixiv.apiClient.searchUser("ABC")
         }
     }
@@ -188,6 +213,7 @@ class SampleTest {
     @Test
     fun getBookmarkedIllustsTest() {
         runBlocking {
+            println("\nGetBookmarkedIllustsTest")
             pixiv.apiClient.getBookmarkedIllusts(TestData.testUserID)
         }
     }
@@ -195,6 +221,7 @@ class SampleTest {
     @Test
     fun getBookmarkedTagTest() {
         runBlocking {
+            println("\nGetBookmarkedTagTest")
             pixiv.apiClient.getBookmarkedTags(TestData.dummyUserID, ImageType.ILLUST)
         }
     }
@@ -202,6 +229,7 @@ class SampleTest {
     @Test
     fun getBookmarkedDetailTest() {
         runBlocking {
+            println("\nGetBookmarkedDetailTest")
             pixiv.apiClient.getBookmarkedDetail(TestData.dummyBookmarkIllustID)
         }
     }

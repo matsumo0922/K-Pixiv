@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 data class SearchConfig(
     val keyword: String,
-    val sort: SearchSort = SearchSort.DATE_DESC,
+    val sort: SearchSort = SearchSort.POPULAR_DESC,
     val target: SearchTarget = SearchTarget.PARTIAL_MATCH_FOR_TAGS,
     val startDate: LocalDate? = null,
     val endDate: LocalDate? = null,

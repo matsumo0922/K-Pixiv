@@ -34,7 +34,9 @@ enum class RankingMode(val value: String) {
 }
 
 enum class SearchSort(val value: String) {
-    DATE_DESC("date_desc"), DATE_ASC("date_asc"),
+    POPULAR_DESC("popular_desc"),
+    DATE_DESC("date_desc"),
+    DATE_ASC("date_asc"),
 }
 
 enum class SearchTarget(val value: String) {

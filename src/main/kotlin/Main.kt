@@ -1,20 +1,34 @@
+import client.Config
+import client.SearchConfig
+import data.Illust
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.io.File
 
 fun main(args: Array<String>) {
 
-    // Dummy UserID: 58290317
-
-    // Test UserID: 71136924, 1309448
-    // Test IllustID: 96916534
-    // Test UgoiraID: 83865186
-    // Test NovelID: 17479409
-    // Test CommentID: 76108978
-    // Test Bookmark IllustID: 67535399
+    // [蛍 原神]にマッチするイラストを100回検索して、ブクマが一番多いイラストをダウンロードするサンプル
 
     runBlocking {
-        val pixiv = KPixiv.getInstance()
-        val data = pixiv.apiClient.getUserNovelBookmarks(278259)
+        val pixiv = KPixiv.getInstance(Config(debugMode = true))
 
-        println(data.toString())
+        val allDataList = mutableListOf<Illust>()
+        var nextUrl: String? = null
+
+        for(i in 0 until 100) {
+            val data = pixiv.apiClient.searchIllust(SearchConfig(keyword = "蛍 原神"), nextUrl) ?: continue
+
+            allDataList.addAll(data.values)
+            nextUrl = data.nextUrl ?: break
+
+            delay(500)
+        }
+
+        val sortedList = allDataList.sortedByDescending { it.totalBookmarks }
+        val vestIllust = sortedList.firstOrNull() ?: return@runBlocking
+
+        pixiv.apiClient.downloadIllust(vestIllust.imageUrls.large, File("./Image.png"))
+
+        println("Saved! [${vestIllust.title}]")
     }
 }

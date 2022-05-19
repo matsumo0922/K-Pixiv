@@ -17,6 +17,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class ApiClient private constructor(
@@ -77,12 +78,13 @@ class ApiClient private constructor(
 
         return mutableListOf<Illust>().apply {
             addAll(result.values)
-            addAll(getUserIllustBookmarks(userId, restrict, result.nextUrl ?: return@apply))
+            addAll(getUserIllustBookmarks(userId, restrict, if(!result.nextUrl.isStrictNull()) result.nextUrl else return@apply))
         }
     }
 
     /**
      * Test OK
+     * ユーザーがブックマークに登録している小説を取得する
      */
     suspend fun getUserNovelBookmarks(userId: Long, restrict: Restrict = Restrict.Public, nextUrl: String? = null): List<Novel> {
         val result = httpClient.get {
@@ -97,7 +99,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Novel>().apply {
             addAll(result.values)
-            addAll(getUserNovelBookmarks(userId, restrict, result.nextUrl ?: return@apply))
+            addAll(getUserNovelBookmarks(userId, restrict, if(!result.nextUrl.isStrictNull()) result.nextUrl else return@apply))
         }
     }
 
@@ -119,7 +121,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Illust>().apply {
             addAll(illusts.values)
-            addAll(getUserIllusts(userId, type, illusts.nextUrl ?: return@apply))
+            addAll(getUserIllusts(userId, type, if(!illusts.nextUrl.isStrictNull()) illusts.nextUrl else return@apply))
         }
     }
 
@@ -140,7 +142,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Novel>().apply {
             addAll(novels.values)
-            addAll(getUserNovels(userId, novels.nextUrl ?: return@apply))
+            addAll(getUserNovels(userId, if(!novels.nextUrl.isStrictNull()) novels.nextUrl else return@apply))
         }
     }
 
@@ -233,7 +235,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Users.UserPreview>().apply {
             addAll(users.values)
-            addAll(getFollowingUsers(userId, restrict, users.nextUrl ?: return@apply))
+            addAll(getFollowingUsers(userId, restrict, if(!users.nextUrl.isStrictNull()) users.nextUrl else return@apply))
         }
     }
 
@@ -357,7 +359,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Comment>().apply {
             addAll(comment.values)
-            addAll(getComments(illustId, comment.nextUrl ?: return@apply))
+            addAll(getComments(illustId, if(!comment.nextUrl.isStrictNull()) comment.nextUrl else return@apply))
         }
     }
 
@@ -377,7 +379,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Comment>().apply {
             addAll(comment.values)
-            addAll(getCommentReplies(commentId, comment.nextUrl ?: return@apply))
+            addAll(getCommentReplies(commentId, if(!comment.nextUrl.isStrictNull()) comment.nextUrl else return@apply))
         }
     }
 
@@ -475,7 +477,7 @@ class ApiClient private constructor(
 
         return mutableListOf<Illust>().apply {
             addAll(illusts.values)
-            addAll(getBookmarkedIllusts(userId, restrict, illusts.nextUrl ?: return@apply))
+            addAll(getBookmarkedIllusts(userId, restrict, if(!illusts.nextUrl.isStrictNull()) illusts.nextUrl else return@apply))
         }
     }
 
@@ -502,7 +504,7 @@ class ApiClient private constructor(
 
         return mutableListOf<BookmarkTag>().apply {
             addAll(tags.values)
-            addAll(getBookmarkedTags(userId, imageType, restrict, tags.nextUrl ?: return@apply))
+            addAll(getBookmarkedTags(userId, imageType, restrict, if(!tags.nextUrl.isStrictNull()) tags.nextUrl else return@apply))
         }
     }
 
@@ -574,6 +576,10 @@ class ApiClient private constructor(
         ).isSuccess()
     }
 
+    /**
+     * Test OK
+     * コメントを追加する
+     */
     suspend fun addComment(illustId: Long, comment: String, parentCommentId: Int? = null): Comment? {
         val result = httpClient.submitForm(
             url = "${Endpoint.API}/v1/illust/comment/add",
@@ -588,6 +594,10 @@ class ApiClient private constructor(
         return formatter.decodeFromJsonElement(result["comment"] ?: return null)
     }
 
+    /**
+     * Test OK
+     * コメントを削除する
+     */
     suspend fun deleteComment(commentId: Long): Boolean {
         return httpClient.submitForm(
             url = "${Endpoint.API}/v1/illust/comment/delete",
@@ -595,6 +605,24 @@ class ApiClient private constructor(
                 append("comment_id", commentId.toString())
             }
         ).isSuccess()
+    }
+
+    suspend fun downloadIllust(uri: String, file: File): Boolean {
+        val raw = httpClient.get {
+            url(uri)
+            header("Referer", Endpoint.API)
+        }.parseBytes() ?: return false
+
+        file.writeBytes(raw)
+
+        return true
+    }
+
+    /**
+     * 厳密なNull判定
+     */
+    private fun String?.isStrictNull(): Boolean {
+        return (this == null || this.lowercase() == "null")
     }
 
     override val coroutineContext: CoroutineContext
