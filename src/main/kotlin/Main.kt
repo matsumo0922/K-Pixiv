@@ -15,8 +15,8 @@ fun main(args: Array<String>) {
         val allDataList = mutableListOf<Illust>()
         var nextUrl: String? = null
 
-        for(i in 0 until 100) {
-            val data = pixiv.apiClient.searchIllust(SearchConfig(keyword = "蛍 原神"), nextUrl) ?: continue
+        for (i in 0 until 1000) {
+            val data = pixiv.apiClient.searchIllust(SearchConfig(keyword = "蛍 R-18"), nextUrl) ?: continue
 
             allDataList.addAll(data.values)
             nextUrl = data.nextUrl ?: break

@@ -599,15 +599,21 @@ class ApiClient private constructor(
      * コメントを削除する
      */
     suspend fun deleteComment(commentId: Long): Boolean {
-        return httpClient.submitForm(
-            url = "${Endpoint.API}/v1/illust/comment/delete",
-            formParameters = Parameters.build {
-                append("comment_id", commentId.toString())
-            }
-        ).isSuccess()
+        return httpClient.submitForm(url = "${Endpoint.API}/v1/illust/comment/delete", formParameters = Parameters.build {
+            append("comment_id", commentId.toString())
+        }).isSuccess()
     }
 
-    suspend fun downloadIllust(uri: String, file: File): Boolean {
+    /**
+     * Test OK
+     * 指定されたURLのイラストを指定されたファイルに保存する
+     */
+    suspend fun downloadIllust(uri: String, file: File, isOverride: Boolean = false): Boolean {
+        if (file.exists()) {
+            if (isOverride) file.delete()
+            else return false
+        }
+
         val raw = httpClient.get {
             url(uri)
             header("Referer", Endpoint.API)
