@@ -16,6 +16,7 @@ open class Client(open val config: Config) {
 
     protected suspend inline fun <reified T> HttpResponse.parse(allowRange: IntRange = 200..299, f: ((T?) -> (Unit)) = {}): T? {
         if (config.debugMode) println("[${this.status}, ${this.request.url}]")
+        if (config.debugMode && this.status.value !in allowRange) println("Error Response: ${this.bodyAsText()}")
         return (if(this.status.value in allowRange) this.body<T>() else null).also(f)
     }
 
@@ -24,8 +25,9 @@ open class Client(open val config: Config) {
         return if(this.status.value in allowRange) this.readBytes() else null
     }
 
-    protected fun HttpResponse.isSuccess(allowRange: IntRange = 200..299): Boolean {
+    protected suspend fun HttpResponse.isSuccess(allowRange: IntRange = 200..299): Boolean {
         if (config.debugMode) println("[${this.status}, ${this.request.url}]")
+        if (config.debugMode && this.status.value !in allowRange) println("Error Response: ${this.bodyAsText()}")
         return (this.status.value in allowRange)
     }
 }
