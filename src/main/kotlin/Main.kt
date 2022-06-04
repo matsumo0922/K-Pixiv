@@ -1,34 +1,29 @@
 import client.Config
-import client.SearchConfig
-import data.Illust
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import java.io.File
+import kotlinx.coroutines.withContext
 
 fun main(args: Array<String>) {
 
-    // [蛍 原神]にマッチするイラストを100回検索して、ブクマが一番多いイラストをダウンロードするサンプル
-
     runBlocking {
         val pixiv = KPixiv.getInstance(Config(debugMode = true))
+        val authCode = pixiv.authClient.getAuthCode()
 
-        val allDataList = mutableListOf<Illust>()
-        var nextUrl: String? = null
-
-        for (i in 0 until 1000) {
-            val data = pixiv.apiClient.searchIllust(SearchConfig(keyword = "蛍 R-18"), nextUrl) ?: continue
-
-            allDataList.addAll(data.values)
-            nextUrl = data.nextUrl ?: break
-
-            delay(500)
+        withContext(Dispatchers.IO) {
+            val command = "cmd /C rundll32.exe url.dll,FileProtocolHandler \"${authCode.url}\""
+            Runtime.getRuntime().exec(command)
         }
 
-        val sortedList = allDataList.sortedByDescending { it.totalBookmarks }
-        val vestIllust = sortedList.firstOrNull() ?: return@runBlocking
+        print("Enter your code > ")
 
-        pixiv.apiClient.downloadIllust(vestIllust.imageUrls.large, File("./Image.png"))
+        val code = readLine()
+        val account = code?.let { pixiv.authClient.initAccount(authCode.apply { this.code = it }) }
 
-        println("Saved! [${vestIllust.title}]")
+        if(account != null) {
+            println("Login has been successful.")
+            println("Hello ${account.user.name}!")
+        } else {
+            println("Login failed.")
+        }
     }
 }
