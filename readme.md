@@ -11,7 +11,7 @@
 
 ```Gradle
 dependencies {
-       implementation 'com.github.CAIOS0922:K-Pixiv:<latest_version>'
+       implementation 'com.github.matsumo0922:K-Pixiv:<latest_version>'
 }
 ```
 
